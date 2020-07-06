@@ -26,7 +26,7 @@ class FieldServiceTest {
     void setUp() {
         field = Field.builder()
                 .id(1L)
-                .capacity(Capacities.LOW)
+                .capacity(Capacities.LOW.getCapacity())
                 .name("Manzah")
                 .build();
     }

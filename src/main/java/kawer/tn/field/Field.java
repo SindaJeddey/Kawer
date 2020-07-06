@@ -9,6 +9,8 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -31,16 +33,20 @@ public class Field {
     private String location;
 
     @NotBlank
+    private String description;
+
+    @NotBlank
     private String contactNumber;
 
     @NotNull
-    private Capacities capacity;
+    private int capacity;
 
     @NotNull
     private Long price;
 
     @ElementCollection
-    private Map<Amenities,Boolean> amenities;
+    @MapKeyColumn
+    private Set<String> amenities;
 
     @OneToMany(mappedBy = "field")
     private Set<Booking> bookings;

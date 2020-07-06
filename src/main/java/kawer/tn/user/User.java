@@ -51,7 +51,4 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private Set<Booking> bookings;
-
-    private Long profilePictureId;
-
 }
