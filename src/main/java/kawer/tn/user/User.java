@@ -1,7 +1,5 @@
 package kawer.tn.user;
 
-import kawer.tn.field.Field;
-import kawer.tn.image.Image;
 import kawer.tn.booking.Booking;
 import lombok.*;
 

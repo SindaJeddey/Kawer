@@ -2,6 +2,7 @@ package kawer.tn.booking;
 
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class BookingService {
 
@@ -14,4 +15,5 @@ public class BookingService {
     public Booking saveBooking (Booking booking){
         return this.bookingRepository.save(booking);
     }
+
 }

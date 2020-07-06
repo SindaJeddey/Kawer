@@ -2,7 +2,6 @@ package kawer.tn.field;
 
 
 import kawer.tn.booking.Booking;
-import kawer.tn.image.Image;
 import kawer.tn.owner.Owner;
 import lombok.*;
 

@@ -36,6 +36,6 @@ public class Booking {
     @NotNull
     private Long reservationPrice;
 
-    private boolean isCancelled;
+    private boolean cancelled;
 
 }
