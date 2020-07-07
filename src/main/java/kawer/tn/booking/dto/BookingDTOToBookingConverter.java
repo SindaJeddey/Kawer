@@ -1,14 +1,16 @@
-package kawer.tn.booking;
+package kawer.tn.booking.dto;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.databind.util.Converter;
-import jdk.internal.jline.internal.Nullable;
+import kawer.tn.booking.Booking;
+import kawer.tn.booking.dto.BookingDTO;
+import org.springframework.lang.Nullable;
 import lombok.Synchronized;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BookingDTOToBookingConverter implements Converter<BookingDTO,Booking> {
+public class BookingDTOToBookingConverter implements Converter<BookingDTO, Booking> {
     @Override
     @Nullable
     @Synchronized
@@ -20,6 +22,8 @@ public class BookingDTOToBookingConverter implements Converter<BookingDTO,Bookin
         booking.setId(bookingDTO.getId());
         booking.setReservationDate(bookingDTO.getReservationDate());
         booking.setReservationPrice(bookingDTO.getReservationPrice());
+        booking.setConfirmed(bookingDTO.isConfirmed());
+        booking.setPlayed(bookingDTO.isPlayed());
         return booking;
     }
 

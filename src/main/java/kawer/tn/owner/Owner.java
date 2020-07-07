@@ -39,7 +39,7 @@ public class Owner {
     @NotBlank
     private String password;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Field> fields;
 
 }

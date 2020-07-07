@@ -1,4 +1,4 @@
-package kawer.tn.owner;
+package kawer.tn.owner.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,4 +14,6 @@ public class OwnerDTO {
     private String username;
     private String email;
     private String number;
+    private String password;
+
 }

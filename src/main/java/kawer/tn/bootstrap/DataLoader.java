@@ -14,10 +14,8 @@ import org.springframework.beans.factory.config.SetFactoryBean;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.awt.print.Book;
+import java.util.*;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -82,6 +80,7 @@ public class DataLoader implements CommandLineRunner {
                 .capacity(Capacities.MEDIUM.getCapacity())
                 .name("Ooreedoo")
                 .owner(ghada)
+                .location("Lac1")
                 .amenities(amenities)
                 .build();
         fieldService.saveField(ooreedoo);
@@ -98,12 +97,21 @@ public class DataLoader implements CommandLineRunner {
 
         Booking booking = Booking.builder()
                 .user(khaled)
-                .reservationDate(new Date())
+                .reservationDate(Calendar.getInstance())
                 .field(ooreedoo)
                 .build();
         bookingService.saveBooking(booking);
 
-        System.out.println("Loading bookings...");
+        Set<Booking> khaledBookings = new HashSet<>();
+        khaledBookings.add(booking);
+        khaled.setBookings(khaledBookings);
+        userService.saveUser(khaled);
 
+        Set<Booking> ooreedooBooking = new HashSet<>();
+        ooreedooBooking.add(booking);
+        ooreedoo.setBookings(ooreedooBooking);
+        fieldService.saveField(ooreedoo);
+
+        System.out.println("Loading bookings...");
     }
 }

@@ -47,6 +47,6 @@ public class User {
 
     private boolean isSubscribedToNewsLetter;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Booking> bookings;
 }

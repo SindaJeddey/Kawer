@@ -1,4 +1,4 @@
-package kawer.tn.user;
+package kawer.tn.user.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,5 +17,6 @@ public class UserDTO {
     private Date birthday;
     private String email;
     private String username;
+    private String password;
     private boolean isSubscribedToNewsLetter;
 }

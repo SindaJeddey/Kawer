@@ -1,8 +1,10 @@
-package kawer.tn.field;
+package kawer.tn.field.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Getter
 @Setter
@@ -15,5 +17,6 @@ public class FieldDTO {
     private String contactNumber;
     private int capacity;
     private Long price;
+    private Set<String> amenities;
 
 }

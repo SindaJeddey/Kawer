@@ -1,14 +1,16 @@
-package kawer.tn.user;
+package kawer.tn.user.dto;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.databind.util.Converter;
-import jdk.internal.jline.internal.Nullable;
+import kawer.tn.user.User;
+import kawer.tn.user.dto.UserDTO;
 import lombok.Synchronized;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserToUserDTOConverter implements Converter<User,UserDTO> {
+public class UserToUserDTOConverter implements Converter<User, UserDTO> {
     @Override
     @Synchronized
     @Nullable
@@ -22,6 +24,7 @@ public class UserToUserDTOConverter implements Converter<User,UserDTO> {
         dto.setBirthday(user.getBirthday());
         dto.setSubscribedToNewsLetter(user.isSubscribedToNewsLetter());
         dto.setUsername(user.getUsername());
+        dto.setPassword(user.getPassword());
         dto.setEmail(user.getEmail());
         return dto;
     }

@@ -7,6 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Calendar;
 import java.util.Date;
 
 @Entity
@@ -31,11 +32,15 @@ public class Booking {
     private Field field;
 
     @NotNull
-    private Date reservationDate;
+    private Calendar reservationDate;
 
     @NotNull
     private Long reservationPrice;
 
     private boolean cancelled;
+
+    private boolean confirmed;
+
+    private boolean played;
 
 }
