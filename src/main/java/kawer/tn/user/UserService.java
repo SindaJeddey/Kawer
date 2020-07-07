@@ -1,9 +1,11 @@
 package kawer.tn.user;
 
 
+import kawer.tn.security.auth.ApplicationUserRepository;
 import kawer.tn.user.dto.UserDTO;
 import kawer.tn.user.dto.UserDTOToUserConverter;
 import kawer.tn.user.dto.UserToUserDTOConverter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,13 +18,18 @@ public class UserService {
     private final UserToUserDTOConverter toUserDTOConverter;
     private final UserDTOToUserConverter dtoToUserConverter;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final ApplicationUserRepository applicationUserRepository;
 
     public UserService(UserToUserDTOConverter toUserDTOConverter,
                        UserDTOToUserConverter dtoToUserConverter,
-                       UserRepository userRepository) {
+                       UserRepository userRepository, PasswordEncoder passwordEncoder,
+                       ApplicationUserRepository applicationUserRepository) {
         this.toUserDTOConverter = toUserDTOConverter;
         this.dtoToUserConverter = dtoToUserConverter;
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.applicationUserRepository = applicationUserRepository;
     }
 
     public User saveUser(User user){
@@ -47,6 +54,7 @@ public class UserService {
         User userToSave = dtoToUserConverter.convert(userDTO);
         User savedUser = userRepository.save(userToSave);
         UserDTO savedUserDto = toUserDTOConverter.convert(savedUser);
+        applicationUserRepository.saveApplicationUser(savedUser.getUsername(),savedUser.getPassword(),"USER");
         return savedUserDto;
     }
 
@@ -62,10 +70,6 @@ public class UserService {
             userToUpdate.setBirthday(updates.getBirthday());
         if (updates.getEmail() != null)
             userToUpdate.setEmail(updates.getEmail());
-        if (updates.getUsername() != null)
-            userToUpdate.setUsername(updates.getUsername());
-        if (updates.getPassword() != null)
-            userToUpdate.setPassword(updates.getPassword());
         if(updates.isSubscribedToNewsLetter() != userToUpdate.isSubscribedToNewsLetter())
             userToUpdate.setSubscribedToNewsLetter(updates.isSubscribedToNewsLetter());
         User savedUser = userRepository.save(userToUpdate);
@@ -74,6 +78,10 @@ public class UserService {
     }
 
     public void deleteUser(Long id){
+        String username = userRepository.findById(id)
+                .orElseThrow(() -> new NullPointerException("User "+id+" not found"))
+                .getUsername();
+        applicationUserRepository.deleteApplicationUser(username,"USER");
         userRepository.deleteById(id);
     }
 }

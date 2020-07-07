@@ -3,6 +3,7 @@ package kawer.tn.owner;
 import kawer.tn.owner.dto.OwnerDTO;
 import kawer.tn.owner.dto.OwnerDTOToOwnerConverter;
 import kawer.tn.owner.dto.OwnerToOwnerDTOConverter;
+import kawer.tn.security.auth.ApplicationUserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,13 +15,16 @@ public class OwnerService {
     private final OwnerRepository ownerRepository;
     private final OwnerDTOToOwnerConverter toOwnerConverter;
     private final OwnerToOwnerDTOConverter toOwnerDTOConverter;
+    private final ApplicationUserRepository applicationUserRepository;
 
     public OwnerService(OwnerRepository ownerRepository,
                         OwnerDTOToOwnerConverter toOwnerConverter,
-                        OwnerToOwnerDTOConverter toOwnerDTOConverter) {
+                        OwnerToOwnerDTOConverter toOwnerDTOConverter,
+                        ApplicationUserRepository applicationUserRepository) {
         this.ownerRepository = ownerRepository;
         this.toOwnerConverter = toOwnerConverter;
         this.toOwnerDTOConverter = toOwnerDTOConverter;
+        this.applicationUserRepository = applicationUserRepository;
     }
 
     public Owner saveOwner(Owner owner) {
@@ -30,6 +34,7 @@ public class OwnerService {
     public OwnerDTO addNewOwner(OwnerDTO ownerDTO) {
         Owner ownerToAdd = toOwnerConverter.convert(ownerDTO);
         Owner savedOwner = ownerRepository.save(ownerToAdd);
+        applicationUserRepository.saveApplicationUser(savedOwner.getUsername(),savedOwner.getPassword(),"OWNER");
         OwnerDTO savedOwnerDTO = toOwnerDTOConverter.convert(savedOwner);
         return savedOwnerDTO;
     }
@@ -43,6 +48,9 @@ public class OwnerService {
     }
 
     public void deleteOwner(Long ownerId) {
+        Owner owner = ownerRepository.findById(ownerId)
+                .orElseThrow(()->new NullPointerException("Owner "+ownerId+" not found"));
+        applicationUserRepository.deleteApplicationUser(owner.getUsername(),"OWNER");
         ownerRepository.deleteById(ownerId);
     }
 
@@ -55,10 +63,6 @@ public class OwnerService {
         if(update.getLastName() != null)
             ownerToUpdate.setLastName(update.getLastName());
         if(update.getUsername() != null)
-            ownerToUpdate.setUsername(update.getUsername());
-        if(update.getPassword() != null)
-            ownerToUpdate.setPassword(update.getPassword());
-        if(update.getNumber() != null)
             ownerToUpdate.setNumber(update.getNumber());
         if(update.getEmail() != null)
             ownerToUpdate.setEmail(update.getEmail());

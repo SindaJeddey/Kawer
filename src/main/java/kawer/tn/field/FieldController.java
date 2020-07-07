@@ -35,19 +35,19 @@ public class FieldController {
     }
 
     @PostMapping("/{ownerId}/new")
-    @PreAuthorize("hasAnyRole('OWNER','ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_OWNER','ROLE_ADMIN')")
     public FieldDTO newField(@RequestBody FieldDTO fieldDTO,@PathVariable Long ownerId) {
         return fieldService.addNewField(fieldDTO,ownerId);
     }
 
     @DeleteMapping("/{fieldId}")
-    @PreAuthorize("hasAnyRole('OWNER','ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_OWNER','ROLE_ADMIN')")
     public void deleteField(@PathVariable Long fieldId) {
         fieldService.deleteField(fieldId);
     }
 
     @PutMapping("/{fieldId}")
-    @PreAuthorize("hasAnyRole('OWNER','ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_OWNER','ROLE_ADMIN')")
     public FieldDTO modifyField(@RequestBody FieldDTO fieldDTO, @PathVariable Long fieldId) {
         return fieldService.modifyField(fieldDTO, fieldId);
     }

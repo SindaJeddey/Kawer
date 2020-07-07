@@ -17,13 +17,13 @@ public class UserController {
     }
 
     @GetMapping("/")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<UserDTO> getAllUsers(){
         return userService.getAllUsers();
     }
 
     @GetMapping("/{userId}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public UserDTO getUserById(@PathVariable Long userId){
         return userService.getUserById(userId);
     }
@@ -35,14 +35,14 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    @PreAuthorize("hasAnyRole('USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public UserDTO modifyUser(@RequestBody UserDTO dto, @PathVariable Long userId){
         UserDTO updatedDto = userService.updateUser(dto,userId);
         return updatedDto;
     }
 
     @DeleteMapping("/{userId}")
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public void deleteUser(@PathVariable Long userId){
         userService.deleteUser(userId);
     }
