@@ -184,4 +184,14 @@ public class BookingService {
 
         return dtos;
     }
+
+    public List<BookingDTO> getFieldBookings(Long fieldId) {
+        Field field = fieldRepository.findById(fieldId)
+                .orElseThrow(()-> new NullPointerException("Field "+fieldId+" not found"));
+        List<BookingDTO> dtos = field.getBookings()
+                .stream()
+                .map(booking -> toBookingDTOConverter.convert(booking))
+                .collect(Collectors.toList());
+        return dtos;
+    }
 }
